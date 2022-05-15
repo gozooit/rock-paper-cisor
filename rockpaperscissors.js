@@ -19,7 +19,7 @@ function capitalize(string) {
     return string.charAt(0).toUpperCase() + string.slice(1).toLowerCase();
 }
 
-function rpsOneRound(playerSelection = capitalize(input("What do you chose ? (Rock, Paper or Scissors ?)\n")), computerSelection=computerPlay()) {
+function rpsOneRound(playerSelection = capitalize(prompt("What do you chose ? (Rock, Paper or Scissors ?)\n")), computerSelection=computerPlay()) {
     let win;
     if (playerSelection === computerSelection) {
         return `${playerSelection} vs ${computerSelection}, it's even !\n`;
