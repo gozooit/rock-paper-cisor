@@ -41,4 +41,10 @@ function playRound(playerSelection = capitalize(prompt("What do you chose ? (Roc
     }
 }
 
-console.log(rpsOneRound());
+function game() {
+    let playerScore = 0;
+    let computerScore = 0;
+    for (let i = 0; i<5; i++) {
+        
+    }
+}
