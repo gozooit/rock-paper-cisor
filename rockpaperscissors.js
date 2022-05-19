@@ -92,4 +92,10 @@ function game() {
     }
 }
 
-game();
+const buttons = document.querySelectorAll('button');
+
+function logTest(e) {
+    console.log(this.classList.value)
+}
+
+buttons.forEach(button => button.addEventListener('click', logTest));
