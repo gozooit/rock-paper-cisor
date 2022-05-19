@@ -45,12 +45,12 @@ function playRound(playerSelection, computerSelection) {
     if (playerSelection === computerSelection) {
         return "even";
     }
-    if (playerSelection === "Rock") {
-        return (computerSelection === "Scissors") || false;
-    } else if (playerSelection === "Paper") {
-        return (computerSelection === "Rock") || false;
-    } else if (playerSelection === "Scissors") {
-        return (computerSelection === "Paper") || false;
+    if (playerSelection === "rock") {
+        return (computerSelection === "scissors") || false;
+    } else if (playerSelection === "paper") {
+        return (computerSelection === "rock") || false;
+    } else if (playerSelection === "scissors") {
+        return (computerSelection === "paper") || false;
     } else {
         return "error";
     }
@@ -60,7 +60,7 @@ function game() {
     let playerScore = 0;
     let computerScore = 0;
     for (let i = 0; i<5; i++) {
-        playerSelection = capitalize(prompt("What do you chose ? (Rock, Paper or Scissors ?)\n"));
+        playerSelection = prompt("What do you chose ? (Rock, Paper or Scissors ?)\n").toLowerCase();
         computerSelection = computerPlay();
         win = playRound(playerSelection, computerSelection);
         if (typeof(win) === "string") {
