@@ -57,22 +57,38 @@ function playRound(playerSelection, computerSelection) {
 //     }
 // }
 
+function addBorder(className) {
+    const div = document.querySelector(`.${className}`);
+    if (div.classList.value !== `${className} border`) {
+        div.classList.add('border');
+    };
+}
+
+function addText(className, text, border=false) {
+    const div = document.getElementById(className);
+    div.textContent = text;
+    if (border) {
+        addBorder(className);
+    }
+};
 
 function isWinner(result, playerSelection, computerSelection) {
     // a changer pour que l'output soit à l'ecran
+    playerSelection = capitalize(playerSelection);
+    computerSelection = capitalize(computerSelection);
     if (typeof(result) === "string") {
         if (result === "even") {
-            console.log(`${playerSelection} vs ${computerSelection}, it's even !\n`);
+            addText('result', `${playerSelection} vs ${computerSelection}, it's even !\n`);
         } else if (result === "error") {
-            console.log(`ERROR! Please enter one of the following : Rock, Paper or Scissors·\n`);
+            addText('result', `ERROR! Please enter one of the following : Rock, Paper or Scissors·\n`);
         }
     }
     else if (typeof(result) === "boolean") {
         if (result) {
-            console.log(`You Won! ${playerSelection} beats ${computerSelection}\n`);
+            addText('result', `You Won! ${playerSelection} beats ${computerSelection}\n`);
             playerScore++;
         } else {
-            console.log(`You Lose! ${computerSelection} beats ${playerSelection}\n`);
+            addText('result', `You Lose! ${computerSelection} beats ${playerSelection}\n`);
             computerScore++;
         }
     }
@@ -96,13 +112,6 @@ function isWinner(result, playerSelection, computerSelection) {
 //     }
 // }
 
-function displayResult() {
-    const div = document.createElement('div');                     
-    div.classList.add('result');
-    div.textContent(`Player: ${playerScore} - IA: ${computerScore}`);
-};
-
-
 function logTest(e) {
     // console.log(this.classList.value);
     let playerSelection = this.classList.value;
@@ -111,6 +120,7 @@ function logTest(e) {
     isWinner(result, playerSelection, computerSelection);
     console.log(playerScore);
     console.log(computerScore);
+    addText('score', `Player: ${playerScore} - IA: ${computerScore}`, border=true);
 };
 
 let playerScore = 0;
