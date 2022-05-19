@@ -95,7 +95,8 @@ function game() {
 const buttons = document.querySelectorAll('button');
 
 function logTest(e) {
-    console.log(this.classList.value)
-}
+    console.log(this.classList.value);
+    win = playRound(this.classList.value, computerPlay());
+};
 
 buttons.forEach(button => button.addEventListener('click', logTest));
