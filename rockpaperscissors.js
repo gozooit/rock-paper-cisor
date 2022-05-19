@@ -3,13 +3,13 @@ function computerPlay() {
     randomNumber = Math.floor(Math.random() * 3);
     switch (randomNumber) {
         case 0:
-            res = "Rock";
+            res = "rock";
             break;
         case 1:
-            res = "Paper";
+            res = "paper";
             break;
         case 2:
-            res = "Scissors";
+            res = "scissors";
             break;
     }
     return res;
