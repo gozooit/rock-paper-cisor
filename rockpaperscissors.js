@@ -56,7 +56,7 @@ function playRound(playerSelection, computerSelection) {
     }
 }
 
-function isWinner(result);
+function isWinner(result) {
     if (typeof(result) === "string") {
         if (result === "even") {
             console.log(`${playerSelection} vs ${computerSelection}, it's even !\n`);
@@ -76,6 +76,7 @@ function isWinner(result);
             console.log(`Round ${i + 1} - Current score is -> You : ${playerScore} // Computer : ${computerScore}\n`);
         }
     }
+}
 
 function game() {
     let playerScore = 0;
@@ -100,6 +101,7 @@ const buttons = document.querySelectorAll('button');
 function logTest(e) {
     console.log(this.classList.value);
     result = playRound(this.classList.value, computerPlay());
+    isWinner(result);
 };
 
 buttons.forEach(button => button.addEventListener('click', logTest));
