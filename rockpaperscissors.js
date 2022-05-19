@@ -19,28 +19,6 @@ function capitalize(string) {
     return string.charAt(0).toUpperCase() + string.slice(1).toLowerCase();
 }
 
-function playRoundOld(playerSelection = capitalize(prompt("What do you chose ? (Rock, Paper or Scissors ?)\n")), computerSelection=computerPlay()) {
-    let win;
-    if (playerSelection === computerSelection) {
-        return `${playerSelection} vs ${computerSelection}, it's even !\n`;
-    }
-    if (playerSelection === "Rock") {
-        win = (computerSelection === "Scissors") || false;
-    } else if (playerSelection === "Paper") {
-        win = (computerSelection === "Rock") || false;
-    } else if (playerSelection === "Scissors") {
-        win = (computerSelection === "Paper") || false;
-    } else {
-        return "Please enter one of the following : Rock, Paper or Scissors·\n";
-    }
-
-    if (win) {
-        return `You Won! ${playerSelection} beats ${computerSelection}\n`;
-    } else {
-        return `You Lose! ${computerSelection} beats ${playerSelection}\n`;
-    }
-}
-
 function playRound(playerSelection, computerSelection) {
     if (playerSelection === computerSelection) {
         return "even";
@@ -81,6 +59,7 @@ function playRound(playerSelection, computerSelection) {
 
 
 function isWinner(result, playerSelection, computerSelection) {
+    // a changer pour que l'output soit à l'ecran
     if (typeof(result) === "string") {
         if (result === "even") {
             console.log(`${playerSelection} vs ${computerSelection}, it's even !\n`);
@@ -91,8 +70,10 @@ function isWinner(result, playerSelection, computerSelection) {
     else if (typeof(result) === "boolean") {
         if (result) {
             console.log(`You Won! ${playerSelection} beats ${computerSelection}\n`);
+            playerScore++;
         } else {
             console.log(`You Lose! ${computerSelection} beats ${playerSelection}\n`);
+            computerScore++;
         }
     }
 }
@@ -115,7 +96,12 @@ function isWinner(result, playerSelection, computerSelection) {
 //     }
 // }
 
-const buttons = document.querySelectorAll('button');
+function displayResult() {
+    const div = document.createElement('div');                     
+    div.classList.add('result');
+    div.textContent(`Player: ${playerScore} - IA: ${computerScore}`);
+};
+
 
 function logTest(e) {
     // console.log(this.classList.value);
@@ -123,6 +109,12 @@ function logTest(e) {
     computerSelection = computerPlay();
     result = playRound(playerSelection, computerSelection);
     isWinner(result, playerSelection, computerSelection);
+    console.log(playerScore);
+    console.log(computerScore);
 };
+
+let playerScore = 0;
+let computerScore = 0;
+const buttons = document.querySelectorAll('button');
 
 buttons.forEach(button => button.addEventListener('click', logTest));
