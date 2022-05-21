@@ -64,6 +64,16 @@ function addBorder(className) {
     };
 }
 
+function setDisabled(className) {
+    const buttons = document.querySelectorAll(`.${className}`);
+    buttons.forEach(button => {
+        if (button.getAttribute('disabled') !== true) {
+            button.setAttribute('disabled', true);
+        };
+    })
+    
+}
+
 function addText(className, text, border=false) {
     const div = document.getElementById(className);
     div.textContent = text;
@@ -94,6 +104,16 @@ function isWinner(result, playerSelection, computerSelection) {
     }
 }
 
+function createNewGame() {
+    const body = document.querySelector('body');
+    const newGame = document.createElement('button');
+    newGame.setAttribute('id', 'newgame');
+    newGame.classList.add('border');
+    newGame.textContent = 'New game';
+    body.appendChild(newGame);
+}
+
+
 // function game() {
 //     let playerScore = 0;
 //     let computerScore = 0;
@@ -114,13 +134,23 @@ function isWinner(result, playerSelection, computerSelection) {
 
 function logTest(e) {
     // console.log(this.classList.value);
-    let playerSelection = this.classList.value;
+    let playerSelection = this.getAttribute('id');
     computerSelection = computerPlay();
     result = playRound(playerSelection, computerSelection);
     isWinner(result, playerSelection, computerSelection);
-    console.log(playerScore);
-    console.log(computerScore);
+    // console.log(playerScore);
+    // console.log(computerScore);
     addText('score', `Player: ${playerScore} - IA: ${computerScore}`, border=true);
+    if ((playerScore === 5) || (computerScore === 5)) {
+        setDisabled('choice');
+        if (playerScore === 5) {
+            addText('score', 'You won. Do you want to play a new game ?', border=true);
+            createNewGame();
+        } else if (computerScore === 5) {
+            addText('score', 'You lost. Do you want to play a new game ?', border=true);
+            createNewGame();
+        }
+    };
 };
 
 let playerScore = 0;
