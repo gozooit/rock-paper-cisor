@@ -34,33 +34,17 @@ function playRound(playerSelection, computerSelection) {
     }
 }
 
-// Duplicate to create log later
-// function isWinner(result) {
-//     if (typeof(result) === "string") {
-//         if (result === "even") {
-//             console.log(`${playerSelection} vs ${computerSelection}, it's even !\n`);
-//             console.log(`Round ${i + 1} - Current score is -> You : ${playerScore} // Computer : ${computerScore}\n`);
-//         } else if (result === "error") {
-//             console.log(`Round ${i + 1} - ERROR! Please enter one of the following : Rock, Paper or Scissors·\n`);
-//         }
-//     }
-//     else if (typeof(result) === "boolean") {
-//         if (result) {
-//             playerScore++;
-//             console.log(`You Won! ${playerSelection} beats ${computerSelection}\n`);
-//             console.log(`Round ${i + 1} - Current score is -> You : ${playerScore} // Computer : ${computerScore}\n`);
-//         } else {
-//             computerScore++;
-//             console.log(`You Lose! ${computerSelection} beats ${playerSelection}\n`);
-//             console.log(`Round ${i + 1} - Current score is -> You : ${playerScore} // Computer : ${computerScore}\n`);
-//         }
-//     }
-// }
-
 function addBorder(className) {
     const div = document.querySelector(`.${className}`);
     if (div.classList.value !== `${className} border`) {
         div.classList.add('border');
+    };
+}
+
+function removeBorder(className) {
+    const div = document.querySelector(`.${className}`);
+    if (div.classList.value === `${className} border`) {
+        div.classList.remove('border');
     };
 }
 
@@ -70,8 +54,16 @@ function setDisabled(className) {
         if (button.getAttribute('disabled') !== true) {
             button.setAttribute('disabled', true);
         };
-    })
-    
+    }) 
+}
+
+function removeDisabled(className) {
+    const buttons = document.querySelectorAll(`.${className}`);
+    buttons.forEach(button => {
+        if (button.getAttribute('disabled') !== false) {
+            button.removeAttribute('disabled');
+        };
+    }) 
 }
 
 function addText(className, text, border=false) {
@@ -79,8 +71,18 @@ function addText(className, text, border=false) {
     div.textContent = text;
     if (border) {
         addBorder(className);
-    }
+    } else {
+        removeBorder(className);
+    };
 };
+
+function resetWindow() {
+    addText('result', '');
+    addText('score', '');
+    const newGame = document.getElementById('newgame');
+    newGame.parentNode.removeChild(newGame);
+    removeDisabled('choice');
+}
 
 function isWinner(result, playerSelection, computerSelection) {
     // a changer pour que l'output soit à l'ecran
@@ -104,35 +106,16 @@ function isWinner(result, playerSelection, computerSelection) {
     }
 }
 
-function createNewGame() {
+function addNewGameButton() {
     const body = document.querySelector('body');
     const newGame = document.createElement('button');
     newGame.setAttribute('id', 'newgame');
-    newGame.classList.add('border');
     newGame.textContent = 'New game';
     body.appendChild(newGame);
 }
 
 
-// function game() {
-//     let playerScore = 0;
-//     let computerScore = 0;
-//     for (let i = 0; i<5; i++) {
-//         playerSelection = prompt("What do you chose ? (Rock, Paper or Scissors ?)\n").toLowerCase();
-//         computerSelection = computerPlay();
-//         win = playRound(playerSelection, computerSelection);
-//         isWinner ici mais osef
-//     }
-//     if (playerScore > computerScore) {
-//         console.log(`Congratulations! You won against the computer : ${playerScore} - ${computerScore}`);
-//     } else if (computerScore > playerScore) {
-//         console.log(`What a shame! You lost against the computer : ${computerScore} - ${playerScore}`);
-//     } else if (computerScore === playerScore) {
-//         console.log(`Close one! It's even : ${playerScore} - ${computerScore}`)
-//     }
-// }
-
-function logTest(e) {
+function play(e) {
     // console.log(this.classList.value);
     let playerSelection = this.getAttribute('id');
     computerSelection = computerPlay();
@@ -145,11 +128,15 @@ function logTest(e) {
         setDisabled('choice');
         if (playerScore === 5) {
             addText('score', 'You won. Do you want to play a new game ?', border=true);
-            createNewGame();
+            addNewGameButton();
         } else if (computerScore === 5) {
             addText('score', 'You lost. Do you want to play a new game ?', border=true);
-            createNewGame();
+            addNewGameButton();
         }
+        const newGame = document.querySelector('#newgame');
+        newGame.addEventListener('click', resetWindow);
+        playerScore = 0;
+        computerScore = 0;
     };
 };
 
@@ -157,4 +144,4 @@ let playerScore = 0;
 let computerScore = 0;
 const buttons = document.querySelectorAll('button');
 
-buttons.forEach(button => button.addEventListener('click', logTest));
+buttons.forEach(button => button.addEventListener('click', play));
